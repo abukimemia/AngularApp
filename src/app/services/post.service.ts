@@ -13,20 +13,30 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
+  // Retrieve
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.postUrl);
   }
 
+  // Add
   savePost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.postUrl, post, httpOptions);
   }
 
+  // Edit
   updatePost(post: Post): Observable<Post> {
     const url = `${this.postUrl}/${post.id}`;
 
     return this.http.put<Post>(url, post, httpOptions);
   }
 
+  getPost(id: number): Observable<Post> {
+    const url = `${this.postUrl}/${id}`;
+
+    return this.http.get<Post>(url);
+  }
+
+  // Delete
   removePost(post: Post | number): Observable<Post> {
     const id = typeof post === 'number' ? post : post.id;
     const url = `${this.postUrl}/${id}`;
